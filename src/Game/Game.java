@@ -13,4 +13,19 @@ public enum Game {
     Game(String name) {
         this.name = name;
     }
+
+    public static Game getEnumByNumber(String name) {
+        for (Game value : values()) {
+            if (value.name.equals(name)) {
+                return value;
+            }
+        }return null;
+    }
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(name);
+        sb.append("\n");
+        return sb.toString();
+    }
 }
