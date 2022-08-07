@@ -1,26 +1,43 @@
 package Game;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
-    private static List<Gamer> gamers;
+    private static List<Gamer> gamers = new ArrayList<>();
     public static void main(String[] args) {
         greateDefaultGamers();
 
       try  (Scanner scanner = new Scanner(System.in)) {
-          while(true) {
+          String username = "";
+          boolean isValidUsername = false;
+          while(!isValidUsername) {
               System.out.println("Укажите Ваш ник:");
-              String username = scanner.nextLine();
+              username = scanner.nextLine();
+              for (Gamer gamer : gamers) {
+                  if (gamer.getUsername().equals(username) || gamers.isEmpty()) {
+                      System.out.println("Игрок с таким именем уже есть");
+                      isValidUsername = false;
+                      break;
+                  } else {
+                      isValidUsername = true;
+                  }
+              }
 
-
-              break;
           }
-          System.out.println("Укажите список игр:");
+          System.out.println("Укажите список игр через пробел:");
           printGameType();
+          String gameList = scanner.nextLine();
+          String[] gameListArray = gameList.split(" ");
+          Map<Game, Long> userGameRating = new HashMap<>();
+
+          for (String currentGameId : gameListArray) {
+             Optional<Game> optionalGame = Optional.ofNullable(Game.getEnumById(Long.valueOf(currentGameId)));
+             optionalGame.ifPresent(game -> userGameRating.put(game, 0L));
+          }
+          Gamer gamer = new Gamer(username, userGameRating);
+          gamers.add(gamer);
+
     }catch (Exception e) {
           System.out.println(e.getStackTrace());
       }
@@ -34,7 +51,7 @@ public class Main {
     }
 
     private static void printGameType() {
-        System.out.println("Введите номер пункта игры:");
+        System.out.println("Введите номера игр через пробел:");
         System.out.println(getGames());
     }
 

@@ -24,7 +24,7 @@ public class Gamer {
         this.username = username;
     }
 
-    public HashMap<Game, Long> getGameRating() {
+    public Map<Game, Long> getGameRating() {
         return gameRating;
     }
 
