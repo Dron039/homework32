@@ -18,7 +18,7 @@ public class IOBasics {
                 exception.printStackTrace();
             }
         }
-        System.out.println(fileByPath.getFreeSpace());
+        System.out.println(fileByPath.setReadOnly());
         Thread.sleep(2000);
         fileByPath.deleteOnExit();
     }
